@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Retail_POS.Models
@@ -23,9 +24,13 @@ namespace Retail_POS.Models
         [Required(ErrorMessage = "Quantity is required")]
         public int Quantity { get; set; }
 
-        // Instead of foreign key, store category as string
-        [StringLength(50)]
-        public string Category { get; set; }
+
+        [Required]
+        [ForeignKey("Category")]
+        public int CategoryId { get; set; }
+
+        public Category Category { get; set; }
+
 
         [NotMapped]
         public decimal TotalValue => Price * Quantity;

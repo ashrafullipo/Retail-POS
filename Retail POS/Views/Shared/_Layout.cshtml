@@ -63,12 +63,23 @@
                         <ul class="nav flex-column">
                             <li><a class="nav-link" asp-controller="Products" asp-action="Index">All Products</a></li>
                             <li><a class="nav-link" asp-controller="Product" asp-action="Create">Add Product</a></li>
-                            <li><a class="nav-link" asp-controller="Category" asp-action="Index">Categories</a></li>
+                            <li><a class="nav-link" asp-controller="Categories" asp-action="Index">Categories</a></li>
                             <li><a class="nav-link" asp-controller="Stock" asp-action="Index">Stock Management</a></li>
                         </ul>
                     </div>
                 </li>
-
+                <!-- Purchase -->
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#productsMenu" role="button" aria-expanded="false">
+                        <span>📦 Purchase</span> <i class="fa fa-chevron-down"></i>
+                    </a>
+                    <div class="collapse submenu" id="productsMenu">
+                        <ul class="nav flex-column">
+                            <li><a class="nav-link" asp-controller="Products" asp-action="Index">New Purchase</a></li>
+                            <li><a class="nav-link" asp-controller="Product" asp-action="Create">Purchase History</a></li>
+                        </ul>
+                    </div>
+                </li>
                 <!-- Customers -->
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#customersMenu" role="button" aria-expanded="false">
@@ -79,6 +90,19 @@
                             <li><a class="nav-link" asp-controller="Customer" asp-action="Index">All Customers</a></li>
                             <li><a class="nav-link" asp-controller="Customer" asp-action="Create">Add Customer</a></li>
                             <li><a class="nav-link" asp-controller="Customer" asp-action="Loyalty">Loyalty Program</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <!-- Supplier -->
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#supplierMenu" role="button" aria-expanded="false">
+                        <span><i class="fa fa-truck me-1"></i> Supplier</span> <i class="fa fa-chevron-down"></i>
+                    </a>
+                    <div class="collapse submenu" id="supplierMenu">
+                        <ul class="nav flex-column">
+                            <li><a class="nav-link" asp-controller="Supplier" asp-action="Index">All Suppliers</a></li>
+                            <li><a class="nav-link" asp-controller="Supplier" asp-action="Create">Add Supplier</a></li>
+                            <li><a class="nav-link" asp-controller="Supplier" asp-action="Reports">Supplier Reports</a></li>
                         </ul>
                     </div>
                 </li>
