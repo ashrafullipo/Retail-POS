@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Retail_POS.Models.Product>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="container-fluid mt-4">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 fw-bold text-primary">📦 Products</h1>
+        <a class="btn btn-gradient shadow-sm" asp-action="Create" style="background: linear-gradient(90deg,#11998e,#38ef7d); color:white;">
+            <i class="fa fa-plus me-1"></i> Add Product
+        </a>
+    </div>
+
+    <!-- Table -->
+    <div class="table-responsive shadow-sm rounded">
+        <table class="table align-middle mb-0">
+            <thead class="table-primary text-white">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Name)</th>
+                    <th>@Html.DisplayNameFor(model => model.SKU)</th>
+                    <th>@Html.DisplayNameFor(model => model.Price)</th>
+                    <th>@Html.DisplayNameFor(model => model.Quantity)</th>
+                    <th>@Html.DisplayNameFor(model => model.Category)</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="table-light-blue">
+                @foreach (var item in Model)
+                {
+                    <tr class="align-middle">
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.SKU)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                            @if (item.Quantity == 0)
+                            {
+                                <span class="badge bg-danger ms-1">Out of Stock</span>
+                            }
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.Category)</td>
+                        <td class="text-center">
+                            <!-- Edit Button -->
+                            <a class="btn btn-sm shadow-sm me-1" asp-action="Edit" asp-route-id="@item.ProductId"
+                               style="background-color: #28a745; color:white;">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <!-- View Button -->
+                            <a class="btn btn-sm shadow-sm me-1" asp-action="Details" asp-route-id="@item.ProductId"
+                               style="background-color: #17a2b8; color:white;">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            <!-- Delete Button -->
+                            <a class="btn btn-sm shadow-sm" asp-action="Delete" asp-route-id="@item.ProductId"
+                               style="background-color: #dc3545; color:white;">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Custom CSS -->
+<style>
+    .btn-gradient:hover {
+        opacity: 0.9;
+    }
+
+    /* Light Blue table rows */
+    .table-light-blue tr {
+        background-color: #e6f0ff; /* subtle light blue */
+    }
+
+        .table-light-blue tr:hover {
+            background-color: #cce0ff; /* slightly darker blue on hover */
+        }
+</style>
