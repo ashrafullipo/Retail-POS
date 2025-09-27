@@ -10,6 +10,10 @@ namespace Retail_POS.Data
         }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
+        public DbSet<PurchaseItem> PurchaseItems { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -19,6 +23,25 @@ namespace Retail_POS.Data
                 .IsUnique();
 
             base.OnModelCreating(modelBuilder);
+
+            // Purchase → Supplier relation
+            modelBuilder.Entity<Purchase>()
+               .HasOne(p => p.Supplier)
+               .WithMany(s => s.Purchases)
+               .HasForeignKey(p => p.SupplierId);
+
+            // PurchaseItem → Purchase relation
+            modelBuilder.Entity<PurchaseItem>()
+                .HasOne(p => p.Purchase)
+                .WithMany(p => p.PurchaseItems)
+                .HasForeignKey(p => p.PurchaseId);
+
+            // PurchaseItem → Product relation
+            modelBuilder.Entity<PurchaseItem>()
+                .HasOne(pi => pi.Product)
+                .WithMany()
+                .HasForeignKey(pi => pi.ProductId);
+
         }
     }
 }
