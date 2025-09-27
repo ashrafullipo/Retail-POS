@@ -20,10 +20,15 @@ namespace Retail_POS.Controllers
         }
 
         // GET: Products
+        // ProductsController
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Products.ToListAsync());
+            var products = await _context.Products
+                                         .Include(p => p.Category) // Category info সহ fetch
+                                         .ToListAsync();
+            return View(products); // view-এ পাঠানো হচ্ছে
         }
+
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -46,15 +51,15 @@ namespace Retail_POS.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
+            ViewBag.Categories = new SelectList(_context.Categories, "CategoryId", "CategoryName");
             return View();
         }
 
-        // POST: Products/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,Name,SKU,Price,Quantity,Category")] Product product)
+        public async Task<IActionResult> Create(Product product)
         {
             if (ModelState.IsValid)
             {
@@ -62,8 +67,13 @@ namespace Retail_POS.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Categories = new SelectList(_context.Categories, "CategoryId", "CategoryName", product.CategoryId);
             return View(product);
         }
+
+
+
+
 
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -81,12 +91,9 @@ namespace Retail_POS.Controllers
             return View(product);
         }
 
-        // POST: Products/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,Name,SKU,Price,Quantity,Category")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductId,Name,SKU,Price,Quantity,CategoryId")] Product product)
         {
             if (id != product.ProductId)
             {
