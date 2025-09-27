@@ -22,7 +22,7 @@
                     <th>@Html.DisplayNameFor(model => model.SKU)</th>
                     <th>@Html.DisplayNameFor(model => model.Price)</th>
                     <th>@Html.DisplayNameFor(model => model.Quantity)</th>
-                    <th>@Html.DisplayNameFor(model => model.Category)</th>
+                    <th>@Html.DisplayNameFor(model => model.Category.CategoryName)</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -40,7 +40,7 @@
                                 <span class="badge bg-danger ms-1">Out of Stock</span>
                             }
                         </td>
-                        <td>@Html.DisplayFor(modelItem => item.Category)</td>
+                        <td>@item.Category?.CategoryName</td>
                         <td class="text-center">
                             <!-- Edit Button -->
                             <a class="btn btn-sm shadow-sm me-1" asp-action="Edit" asp-route-id="@item.ProductId"
