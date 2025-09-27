@@ -24,9 +24,9 @@ namespace Retail_POS.Controllers
         public async Task<IActionResult> Index()
         {
             var products = await _context.Products
-                                         .Include(p => p.Category) // Category info সহ fetch
+                                         .Include(p => p.Category) 
                                          .ToListAsync();
-            return View(products); // view-এ পাঠানো হচ্ছে
+            return View(products); 
         }
 
 
