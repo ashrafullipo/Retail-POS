@@ -1,61 +1,73 @@
 ﻿@model Retail_POS.Models.Supplier
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Supplier";
 }
 
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["Success"]
-    </div>
-}
+<div class="container mt-5">
+    <!-- Success Message -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
 
-
-<h1>Create</h1>
-
-<h4>Supplier</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-       
-
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="SupplierName"></label>
-        <input asp-for="SupplierName" class="form-control" />
-        <span asp-validation-for="SupplierName" class="text-danger"></span>
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 fw-bold text-primary">Create Supplier</h1>
+        <a class="btn btn-secondary" asp-action="Index">
+            <i class="fa fa-arrow-left me-1"></i> Back to List
+        </a>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Phone"></label>
-        <input asp-for="Phone" class="form-control" />
-        <span asp-validation-for="Phone" class="text-danger"></span>
+    <!-- Card Form -->
+    <div class="card shadow-lg border-0 rounded-3">
+        <div class="card-body p-4">
+            <h4 class="card-title mb-3 text-dark">Supplier Information</h4>
+            <hr />
+
+            <form asp-action="Create" method="post">
+                <div class="mb-3">
+                    <label asp-for="SupplierName" class="form-label fw-semibold"></label>
+                    <input asp-for="SupplierName" class="form-control" placeholder="Enter supplier name" />
+                    <span asp-validation-for="SupplierName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Phone" class="form-label fw-semibold"></label>
+                    <input asp-for="Phone" class="form-control" placeholder="Enter phone number" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label fw-semibold"></label>
+                    <input asp-for="Email" class="form-control" placeholder="Enter email address" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Address" class="form-label fw-semibold"></label>
+                    <textarea asp-for="Address" class="form-control" rows="3" placeholder="Enter supplier address"></textarea>
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary px-4 me-2">
+                        <i class="fa fa-save me-1"></i> Save
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Address"></label>
-        <input asp-for="Address" class="form-control" />
-        <span asp-validation-for="Address" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Save</button>
-</form>
-
-
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
