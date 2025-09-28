@@ -19,12 +19,32 @@ namespace Retail_POS.Controllers
             _context = context;
         }
 
+
+
+
+
+        public async Task<IActionResult> History()
+        {
+            var purchases = await _context.Purchases
+                .Include(p => p.Supplier)
+                .OrderByDescending(p => p.PurchaseDate)
+                .ToListAsync();
+
+            return View(purchases);
+        }
+
+
+
+
         // GET: Purchases
         public async Task<IActionResult> Index()
         {
             var appDbContext = _context.Purchases.Include(p => p.Supplier);
             return View(await appDbContext.ToListAsync());
         }
+
+
+
 
         // GET: Purchases/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -52,9 +72,7 @@ namespace Retail_POS.Controllers
             return View();
         }
 
-        // POST: Purchases/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PurchaseId,SupplierId,PurchaseDate,TotalAmount,Notes")] Purchase purchase)
@@ -86,9 +104,7 @@ namespace Retail_POS.Controllers
             return View(purchase);
         }
 
-        // POST: Purchases/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("PurchaseId,SupplierId,PurchaseDate,TotalAmount,Notes")] Purchase purchase)
