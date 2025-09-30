@@ -13,6 +13,7 @@ namespace Retail_POS.Data
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<PurchaseItem> PurchaseItems { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
