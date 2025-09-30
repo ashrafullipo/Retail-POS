@@ -9,34 +9,22 @@ namespace Retail_POS.Models
         public int SaleId { get; set; }
 
         [Required]
-        [Display(Name = "Product")]
-        public int ProductId { get; set; }
+        public int CustomerId { get; set; }
 
-        [ForeignKey("ProductId")]
-        public Product Product { get; set; }
-
-        [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Quantity must be at least 1")]
-        public int Quantity { get; set; }
+        [ForeignKey("CustomerId")]
+        public Customer? Customer { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal UnitPrice { get; set; }
-
-        [NotMapped]
-        public decimal TotalPrice => Quantity * UnitPrice;
-
-        [Required]
-        [DataType(DataType.Date)]
         public DateTime SaleDate { get; set; } = DateTime.Now;
+
+        [Column(TypeName = "decimal(18,2)")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Amount must be greater than 0")]
+        public decimal TotalAmount { get; set; }
 
         [StringLength(255)]
         public string? Notes { get; set; }
 
-        // Optional Customer
-        [Display(Name = "Customer")]
-        public int? CustomerId { get; set; }
+        public ICollection<SaleItem> SaleItems { get; set; } = new List<SaleItem>();
 
-      
     }
 }
