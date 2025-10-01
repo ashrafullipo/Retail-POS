@@ -60,13 +60,35 @@ namespace Retail_POS.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(sale);
+                sale.TotalAmount = sale.SaleItems.Sum(i => i.Quantity * i.UnitPrice);
+
+                _context.Sales.Add(sale);
+
+                foreach(var item in sale.SaleItems)
+                {
+                    var product = await _context.Products.FindAsync(item.ProductId);
+                    if (product != null)
+                    {
+                        if (product.Quantity >= item.Quantity)
+                        {
+                            product.Quantity -= item.Quantity;
+                            _context.Products.Update(product);
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", $"Insufficient stock for product {product.Name}");
+                            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Name", sale.CustomerId);
+                            return View(sale);
+                        }
+                    }
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Name", sale.CustomerId);
             return View(sale);
         }
+
+
 
         // GET: Sales/Edit/5
         public async Task<IActionResult> Edit(int? id)

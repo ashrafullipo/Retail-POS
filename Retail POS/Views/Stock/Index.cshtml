@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Retail_POS.Models.Product>
+
+<h2>Stock Management</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Available Stock</th>
+            <th>Total Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Category?.CategoryName</td>
+                <td>@item.Price</td>
+                <td>@item.Quantity</td>
+                <td>@item.TotalValue</td>
+            </tr>
+        }
+    </tbody>
+</table>

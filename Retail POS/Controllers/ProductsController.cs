@@ -23,10 +23,11 @@ namespace Retail_POS.Controllers
         // ProductsController
         public async Task<IActionResult> Index()
         {
-            var products = await _context.Products
-                                         .Include(p => p.Category) 
-                                         .ToListAsync();
-            return View(products); 
+             var products = await _context.Products
+            .Include(p => p.Category)
+            .ToListAsync();
+
+        return View(products);
         }
 
 

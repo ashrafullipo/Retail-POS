@@ -79,11 +79,24 @@ namespace Retail_POS.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(purchase);
+                purchase.TotalAmount = purchase.PurchaseItems.Sum(i => i.Quantity * i.UnitPrice);
+                _context.Purchases.Add(purchase);
+
+
+                foreach (var item in purchase.PurchaseItems)
+                {
+                    var product = await _context.Products.FindAsync(item.ProductId);
+                    if (product != null)
+                    {
+                        product.Quantity += item.Quantity;
+                        _context.Products.Update(product);
+                    }
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+
+
             }
-            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "SupplierId", "SupplierName", purchase.SupplierId);
             return View(purchase);
         }
 
