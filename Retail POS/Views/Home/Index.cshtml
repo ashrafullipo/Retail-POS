@@ -1,8 +1,58 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Welcome to Retail POS";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- Full Landing Section -->
+<div class="d-flex flex-column justify-content-center align-items-center text-center"
+     style="min-height: 80vh; background: linear-gradient(135deg, #007BFF, #6610f2); color: white;">
+
+    <h1 class="display-4 fw-bold mb-3 animate__animated animate__fadeInDown">
+        Welcome to <span style="color:#ffd43b;">Retail POS</span>
+    </h1>
+
+    <p class="lead mb-4 animate__animated animate__fadeInUp">
+        Smart, Simple & Efficient Retail Management System <br />
+        Manage your products, purchases, customers, and sales all in one place.
+    </p>
+
+    <div class="d-flex gap-3 justify-content-center animate__animated animate__fadeInUp">
+        <a href="/Dashboard/Index" class="btn btn-warning btn-lg shadow fw-semibold px-4">
+            <i class="fa fa-chart-line me-2"></i> Go to Dashboard
+        </a>
+        <a href="/Account/Login" class="btn btn-outline-light btn-lg shadow px-4">
+            <i class="fa fa-user me-2"></i> Login
+        </a>
+    </div>
 </div>
+
+<!-- Info Section -->
+<section class="container text-center my-5">
+    <h2 class="fw-bold mb-4">Why Choose Retail POS?</h2>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="card shadow border-0 p-4 h-100">
+                <i class="fa fa-box fa-3x text-primary mb-3"></i>
+                <h5>Product Management</h5>
+                <p>Keep track of your inventory and product details efficiently.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow border-0 p-4 h-100">
+                <i class="fa fa-shopping-cart fa-3x text-success mb-3"></i>
+                <h5>Easy Sales Tracking</h5>
+                <p>Monitor your daily sales and performance with real-time data.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow border-0 p-4 h-100">
+                <i class="fa fa-chart-pie fa-3x text-danger mb-3"></i>
+                <h5>Insightful Reports</h5>
+                <p>Analyze business growth through detailed reports and charts.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Animation CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
