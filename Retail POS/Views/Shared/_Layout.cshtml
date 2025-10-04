@@ -1,14 +1,19 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Retail_POS</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Retail_POS.styles.css" asp-append-version="true" />
-    <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
     <style>
         .sidebar {
             width: 240px;
@@ -31,10 +36,31 @@
             font-size: 14px;
             padding-left: 35px;
         }
+
+        .navbar {
+            background-color: #0d6efd;
+        }
+
+            .navbar .navbar-brand {
+                color: #fff !important;
+                font-weight: bold;
+                font-size: 20px;
+            }
+
+            .navbar .nav-link {
+                color: #fff !important;
+            }
+
+        .footer {
+            border-top: 1px solid #ddd;
+            background-color: #f8f9fa;
+        }
     </style>
 </head>
+
 <body>
     <div class="d-flex">
+
         <!-- Sidebar -->
         <div class="bg-primary sidebar">
             <h3 class="text-center text-dark py-3 border-bottom">Retail POS</h3>
@@ -42,7 +68,7 @@
 
                 <!-- Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#dashboardMenu" role="button" aria-expanded="false">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#dashboardMenu" role="button">
                         <span>🏠 Dashboard</span> <i class="fa fa-chevron-down"></i>
                     </a>
                     <div class="collapse submenu" id="dashboardMenu">
@@ -56,7 +82,7 @@
 
                 <!-- Products -->
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#productsMenu" role="button" aria-expanded="false">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#productsMenu" role="button">
                         <span>📦 Products</span> <i class="fa fa-chevron-down"></i>
                     </a>
                     <div class="collapse submenu" id="productsMenu">
@@ -68,34 +94,36 @@
                         </ul>
                     </div>
                 </li>
+
                 <!-- Purchase -->
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#productsMenu" role="button" aria-expanded="false">
-                        <span>📦 Purchase</span> <i class="fa fa-chevron-down"></i>
+                    <a class="nav-link" data-bs-toggle="collapse" href="#purchaseMenu" role="button">
+                        <span>🧾 Purchase</span> <i class="fa fa-chevron-down"></i>
                     </a>
-                    <div class="collapse submenu" id="productsMenu">
+                    <div class="collapse submenu" id="purchaseMenu">
                         <ul class="nav flex-column">
                             <li><a class="nav-link" asp-controller="Purchases" asp-action="Index">New Purchase</a></li>
                             <li><a class="nav-link" asp-controller="Purchases" asp-action="History">Purchase History</a></li>
                         </ul>
                     </div>
                 </li>
+
                 <!-- Customers -->
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#customersMenu" role="button" aria-expanded="false">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#customersMenu" role="button">
                         <span>👤 Customers</span> <i class="fa fa-chevron-down"></i>
                     </a>
                     <div class="collapse submenu" id="customersMenu">
                         <ul class="nav flex-column">
                             <li><a class="nav-link" asp-controller="Customers" asp-action="Index">All Customers</a></li>
                             <li><a class="nav-link" asp-controller="Customers" asp-action="Create">Add Customer</a></li>
-                            
                         </ul>
                     </div>
                 </li>
+
                 <!-- Supplier -->
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#supplierMenu" role="button" aria-expanded="false">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#supplierMenu" role="button">
                         <span><i class="fa fa-truck me-1"></i> Supplier</span> <i class="fa fa-chevron-down"></i>
                     </a>
                     <div class="collapse submenu" id="supplierMenu">
@@ -109,7 +137,7 @@
 
                 <!-- Sales -->
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#salesMenu" role="button" aria-expanded="false">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#salesMenu" role="button">
                         <span>💰 Sales</span> <i class="fa fa-chevron-down"></i>
                     </a>
                     <div class="collapse submenu" id="salesMenu">
@@ -124,7 +152,7 @@
 
                 <!-- Reports -->
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#reportsMenu" role="button" aria-expanded="false">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#reportsMenu" role="button">
                         <span>📊 Reports</span> <i class="fa fa-chevron-down"></i>
                     </a>
                     <div class="collapse submenu" id="reportsMenu">
@@ -138,7 +166,7 @@
 
                 <!-- Settings -->
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#settingsMenu" role="button" aria-expanded="false">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#settingsMenu" role="button">
                         <span>⚙ Settings</span> <i class="fa fa-chevron-down"></i>
                     </a>
                     <div class="collapse submenu" id="settingsMenu">
@@ -153,15 +181,27 @@
             </ul>
         </div>
 
-        <!-- Main Content -->
-        <div class="flex-grow-1">
-            <main role="main" class="p-4">
+        <!-- Main Content Area -->
+        <div class="flex-grow-1 d-flex flex-column">
+
+            <!-- ✅ Navbar -->
+            <nav class="navbar navbar-expand-lg shadow-sm">
+                <div class="container-fluid">
+                    
+                    <div class="collapse navbar-collapse justify-content-end">
+                        <partial name="_LoginPartial" />
+                    </div>
+                </div>
+            </nav>
+
+            <!-- ✅ Main Content -->
+            <main role="main" class="p-4 flex-grow-1">
                 @RenderBody()
             </main>
 
-            <!-- Footer -->
-            <footer class="border-top footer text-muted text-center py-3">
-                &copy; 2025 - Retail_POS
+            <!-- ✅ Footer -->
+            <footer class="footer text-center">
+                &copy; 2025 - Retail_POS | Developed by <b>Lipo</b>
             </footer>
         </div>
     </div>
