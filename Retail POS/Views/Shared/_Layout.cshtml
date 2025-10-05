@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
@@ -15,128 +15,133 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 
+<
 <body>
+    >
     <div class="d-flex">
 
         <!-- 🧭 Sidebar -->
-        <div class="bg-white text-dark sidebar p-3" style="width:240px; min-height:100vh;">
-            <h3 class="text-center border-bottom pb-2 mb-3">Retail POS</h3>
-            <ul class="nav flex-column">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div class="bg-white text-dark sidebar p-3" style="width:240px; min-height:100vh;">
+                <h3 class="text-center border-bottom pb-2 mb-3">Retail POS</h3>
+                <ul class="nav flex-column">
 
-                <!-- Dashboard -->
-                <li class="nav-item shadow-sm">
-                    <a class="nav-link text-dark" data-bs-toggle="collapse" href="#dashboardMenu" role="button">
-                        🏠 Dashboard <i class="fa fa-chevron-down float-end"></i>
-                    </a>
-                    <div class="collapse" id="dashboardMenu">
-                        <ul class="nav flex-column ms-3">
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Dashboard" asp-action="Index">Overview</a></li>
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Dashboard" asp-action="Analytics">Analytics</a></li>
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Dashboard" asp-action="Notifications">Notifications</a></li>
-                        </ul>
-                    </div>
-                </li>
+                    <!-- Dashboard -->
+                    <li class="nav-item shadow-sm">
+                        <a class="nav-link text-dark" data-bs-toggle="collapse" href="#dashboardMenu" role="button">
+                            🏠 Dashboard <i class="fa fa-chevron-down float-end"></i>
+                        </a>
+                        <div class="collapse" id="dashboardMenu">
+                            <ul class="nav flex-column ms-3">
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Dashboard" asp-action="Index">Overview</a></li>
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Dashboard" asp-action="Analytics">Analytics</a></li>
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Dashboard" asp-action="Notifications">Notifications</a></li>
+                            </ul>
+                        </div>
+                    </li>
 
-                <!-- Products -->
-                <li class="nav-item mt-2 shadow-sm">
-                    <a class="nav-link text-dark" data-bs-toggle="collapse" href="#productsMenu">
-                        📦 Products <i class="fa fa-chevron-down float-end"></i>
-                    </a>
-                    <div class="collapse" id="productsMenu">
-                        <ul class="nav flex-column ms-3">
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Products" asp-action="Index">All Products</a></li>
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Products" asp-action="Create">Add Product</a></li>
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Categories" asp-action="Index">Categories</a></li>
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Stock" asp-action="Index">Stock Management</a></li>
-                        </ul>
-                    </div>
-                </li>
+                    <!-- Products -->
+                    <li class="nav-item mt-2 shadow-sm">
+                        <a class="nav-link text-dark" data-bs-toggle="collapse" href="#productsMenu">
+                            📦 Products <i class="fa fa-chevron-down float-end"></i>
+                        </a>
+                        <div class="collapse" id="productsMenu">
+                            <ul class="nav flex-column ms-3">
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Products" asp-action="Index">All Products</a></li>
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Products" asp-action="Create">Add Product</a></li>
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Categories" asp-action="Index">Categories</a></li>
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Stock" asp-action="Index">Stock Management</a></li>
+                            </ul>
+                        </div>
+                    </li>
 
-                <!-- Purchase -->
-                <li class="nav-item mt-2 shadow-sm">
-                    <a class="nav-link text-dark" data-bs-toggle="collapse" href="#purchaseMenu">
-                        🧾 Purchase <i class="fa fa-chevron-down float-end"></i>
-                    </a>
-                    <div class="collapse" id="purchaseMenu">
-                        <ul class="nav flex-column ms-3">
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Purchases" asp-action="Index">New Purchase</a></li>
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Purchases" asp-action="History">Purchase History</a></li>
-                        </ul>
-                    </div>
-                </li>
+                    <!-- Purchase -->
+                    <li class="nav-item mt-2 shadow-sm">
+                        <a class="nav-link text-dark" data-bs-toggle="collapse" href="#purchaseMenu">
+                            🧾 Purchase <i class="fa fa-chevron-down float-end"></i>
+                        </a>
+                        <div class="collapse" id="purchaseMenu">
+                            <ul class="nav flex-column ms-3">
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Purchases" asp-action="Index">New Purchase</a></li>
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Purchases" asp-action="History">Purchase History</a></li>
+                            </ul>
+                        </div>
+                    </li>
 
-                <!-- Customers -->
-                <li class="nav-item mt-2 shadow-sm">
-                    <a class="nav-link text-dark" data-bs-toggle="collapse" href="#customersMenu">
-                        👤 Customers <i class="fa fa-chevron-down float-end"></i>
-                    </a>
-                    <div class="collapse" id="customersMenu">
-                        <ul class="nav flex-column ms-3">
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Customers" asp-action="Index">All Customers</a></li>
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Customers" asp-action="Create">Add Customer</a></li>
-                        </ul>
-                    </div>
-                </li>
+                    <!-- Customers -->
+                    <li class="nav-item mt-2 shadow-sm">
+                        <a class="nav-link text-dark" data-bs-toggle="collapse" href="#customersMenu">
+                            👤 Customers <i class="fa fa-chevron-down float-end"></i>
+                        </a>
+                        <div class="collapse" id="customersMenu">
+                            <ul class="nav flex-column ms-3">
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Customers" asp-action="Index">All Customers</a></li>
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Customers" asp-action="Create">Add Customer</a></li>
+                            </ul>
+                        </div>
+                    </li>
 
-                <!-- Supplier -->
-                <li class="nav-item mt-2 shadow-sm">
-                    <a class="nav-link text-dark" data-bs-toggle="collapse" href="#supplierMenu">
-                        🚚 Supplier <i class="fa fa-chevron-down float-end"></i>
-                    </a>
-                    <div class="collapse" id="supplierMenu">
-                        <ul class="nav flex-column ms-3">
-                            <li class="nav-item"><a class="nav-link text-dark-50" asp-controller="Suppliers" asp-action="Index">All Suppliers</a></li>
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Suppliers" asp-action="Create">Add Supplier</a></li>
-                            <li class="nav-item"><a class="nav-link text-dark-50" asp-controller="Supplier" asp-action="Reports">Supplier Reports</a></li>
-                        </ul>
-                    </div>
-                </li>
+                    <!-- Supplier -->
+                    <li class="nav-item mt-2 shadow-sm">
+                        <a class="nav-link text-dark" data-bs-toggle="collapse" href="#supplierMenu">
+                            🚚 Supplier <i class="fa fa-chevron-down float-end"></i>
+                        </a>
+                        <div class="collapse" id="supplierMenu">
+                            <ul class="nav flex-column ms-3">
+                                <li class="nav-item"><a class="nav-link text-dark-50" asp-controller="Suppliers" asp-action="Index">All Suppliers</a></li>
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Suppliers" asp-action="Create">Add Supplier</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark-50" asp-controller="Supplier" asp-action="Reports">Supplier Reports</a></li>
+                            </ul>
+                        </div>
+                    </li>
 
-                <!-- Sales -->
-                <li class="nav-item mt-2 shadow-sm">
-                    <a class="nav-link text-dark" data-bs-toggle="collapse" href="#salesMenu">
-                        💰 Sales <i class="fa fa-chevron-down float-end"></i>
-                    </a>
-                    <div class="collapse" id="salesMenu">
-                        <ul class="nav flex-column ms-3">
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Sales" asp-action="Index">All Sales</a></li>
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Sales" asp-action="Create">New Sale</a></li>
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Invoice" asp-action="Index">Invoices</a></li>
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Payment" asp-action="Index">Payments</a></li>
-                        </ul>
-                    </div>
-                </li>
+                    <!-- Sales -->
+                    <li class="nav-item mt-2 shadow-sm">
+                        <a class="nav-link text-dark" data-bs-toggle="collapse" href="#salesMenu">
+                            💰 Sales <i class="fa fa-chevron-down float-end"></i>
+                        </a>
+                        <div class="collapse" id="salesMenu">
+                            <ul class="nav flex-column ms-3">
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Sales" asp-action="Index">All Sales</a></li>
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Sales" asp-action="Create">New Sale</a></li>
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Invoice" asp-action="Index">Invoices</a></li>
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Payment" asp-action="Index">Payments</a></li>
+                            </ul>
+                        </div>
+                    </li>
 
-                <!-- Reports -->
-                <li class="nav-item mt-2 shadow-sm">
-                    <a class="nav-link text-dark" data-bs-toggle="collapse" href="#reportsMenu">
-                        📊 Reports <i class="fa fa-chevron-down float-end"></i>
-                    </a>
-                    <div class="collapse" id="reportsMenu">
-                        <ul class="nav flex-column ms-3">
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Reports" asp-action="SalesReport">Sales Report</a></li>
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Reports" asp-action="StockReport">Stock Report</a></li>
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Reports" asp-action="CustomerReport">Customer Report</a></li>
-                        </ul>
-                    </div>
-                </li>
+                    <!-- Reports -->
+                    <li class="nav-item mt-2 shadow-sm">
+                        <a class="nav-link text-dark" data-bs-toggle="collapse" href="#reportsMenu">
+                            📊 Reports <i class="fa fa-chevron-down float-end"></i>
+                        </a>
+                        <div class="collapse" id="reportsMenu">
+                            <ul class="nav flex-column ms-3">
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Reports" asp-action="SalesReport">Sales Report</a></li>
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Reports" asp-action="StockReport">Stock Report</a></li>
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Reports" asp-action="CustomerReport">Customer Report</a></li>
+                            </ul>
+                        </div>
+                    </li>
 
-                <!-- Settings -->
-                <li class="nav-item mt-2 shadow-sm">
-                    <a class="nav-link text-dark" data-bs-toggle="collapse" href="#settingsMenu">
-                        ⚙ Settings <i class="fa fa-chevron-down float-end"></i>
-                    </a>
-                    <div class="collapse" id="settingsMenu">
-                        <ul class="nav flex-column ms-3">
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Settings" asp-action="Index">General Settings</a></li>
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Settings" asp-action="Users">User Management</a></li>
-                            <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Settings" asp-action="Roles">Role Management</a></li>
-                        </ul>
-                    </div>
-                </li>
+                    <!-- Settings -->
+                    <li class="nav-item mt-2 shadow-sm">
+                        <a class="nav-link text-dark" data-bs-toggle="collapse" href="#settingsMenu">
+                            ⚙ Settings <i class="fa fa-chevron-down float-end"></i>
+                        </a>
+                        <div class="collapse" id="settingsMenu">
+                            <ul class="nav flex-column ms-3">
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Settings" asp-action="Index">General Settings</a></li>
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Settings" asp-action="Users">User Management</a></li>
+                                <li class="nav-item "><a class="nav-link text-dark-50" asp-controller="Settings" asp-action="Roles">Role Management</a></li>
+                            </ul>
+                        </div>
+                    </li>
 
-            </ul>
-        </div>
+                </ul>
+            </div>
+        }
 
         <!-- 🧭 Main Content -->
         <div class="flex-grow-1 d-flex flex-column">
@@ -155,10 +160,13 @@
                 @RenderBody()
             </main>
 
-            <!-- ✅ Footer -->
-            <footer class="bg-light text-center py-3 border-top">
-                &copy; 2025 - Retail_POS | Developed by <b>Lipo</b>
-            </footer>
+         @if (SignInManager.IsSignedIn(User))
+            {
+                <!-- ✅ Footer -->
+                <footer class="bg-light text-center py-3 border-top">
+                    &copy; 2025 - Retail_POS | Developed by <b>Lipo</b>
+                </footer>
+            }
         </div>
     </div>
 

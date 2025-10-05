@@ -65,7 +65,16 @@ namespace Retail_POS.Controllers
             return View(model);
         }
 
-
+        //Logout start here
+        public async Task<IActionResult> Logout()
+        {
+            if(signInManager.IsSignedIn(User))
+            {
+                await signInManager.SignOutAsync();
+            }
+            return RedirectToAction("Login", "Account");
+        }
+        //Logout end here
 
 
 
@@ -73,6 +82,8 @@ namespace Retail_POS.Controllers
         {
             return View();
         }
+
+       
 
 
         //Register
