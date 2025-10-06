@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Retail_POS.Models;
 using Retail_POS.ViewModel;
 
@@ -123,11 +124,12 @@ namespace Retail_POS.Controllers
 
                     await userManager.AddToRoleAsync(user, "User");
 
-                    // Auto login after register
-                    await signInManager.SignInAsync(user, isPersistent: false);
+                    // ✅ After successful registration, redirect to Login page
+                    TempData["Message"] = "Registration successful! Please login to continue.";
                     return RedirectToAction("Login", "Account");
                 }
 
+                // show error messages
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
@@ -138,6 +140,43 @@ namespace Retail_POS.Controllers
             return View(model);
         }
 
+
+        //ChangePassword
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ChangePassword() => View();
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.FindByEmailAsync(model.Email);
+                if (user == null)
+                {
+                    TempData["Message"] = "No account found with this email.";
+                    return View(model);
+                }
+
+                var resetToken = await userManager.GeneratePasswordResetTokenAsync(user);   
+
+                var res = await userManager.ResetPasswordAsync(user, resetToken, model.NewPassword);
+
+                if (res.Succeeded)
+                {
+                    TempData["Message"] = "Password changed successfully! Please login with your new password.";
+                    return RedirectToAction("Login", "Account");
+                }
+
+                foreach (var error in res.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+            TempData["Message"] = "Password change failed. Please try again.";
+            return View(model);
+        }
 
     }
 }
