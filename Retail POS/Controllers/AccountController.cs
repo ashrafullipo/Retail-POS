@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Retail_POS.Models;
 using Retail_POS.ViewModel;
@@ -28,6 +29,7 @@ namespace Retail_POS.Controllers
 
         //Login
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
@@ -35,6 +37,7 @@ namespace Retail_POS.Controllers
 
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (model != null)
@@ -78,15 +81,63 @@ namespace Retail_POS.Controllers
 
 
 
+        //Register
+        [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
 
-       
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // check if email already exists
+                var existingUser = await userManager.FindByEmailAsync(model.Email);
+                if (existingUser != null)
+                {
+                    TempData["Message"] = "Email already registered!";
+                    return View(model);
+                }
+
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FullName = model.FullName
+                };
+
+                var result = await userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    // Default role: User
+                    if (!await roleManager.RoleExistsAsync("User"))
+                    {
+                        await roleManager.CreateAsync(new IdentityRole("User"));
+                    }
+
+                    await userManager.AddToRoleAsync(user, "User");
+
+                    // Auto login after register
+                    await signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Login", "Account");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+
+            TempData["Message"] = "Registration failed. Please try again.";
+            return View(model);
+        }
 
 
-        //Register
-        
     }
 }

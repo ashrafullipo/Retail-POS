@@ -16,7 +16,16 @@ builder.Services.AddAuthentication();
 
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    var policy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder()
+    .RequireAuthenticatedUser()
+    .Build();
+    options.Filters.Add(new Microsoft.AspNetCore.Mvc.Authorization.AuthorizeFilter(policy));
+});
+
+
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),

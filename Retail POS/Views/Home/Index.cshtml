@@ -1,4 +1,8 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
     ViewData["Title"] = "Welcome to Retail POS";
 }
 
@@ -19,9 +23,12 @@
         <a href="/Dashboard/Index" class="btn btn-warning btn-lg shadow fw-semibold px-4">
             <i class="fa fa-chart-line me-2"></i> Go to Dashboard
         </a>
-        <a href="/Account/Login" class="btn btn-outline-light btn-lg shadow px-4">
-            <i class="fa fa-user me-2"></i> Login
-        </a>
+        @if (!SignInManager.IsSignedIn(User))
+        {
+            <a href="/Account/Login" class="btn btn-outline-light btn-lg shadow px-4">
+                <i class="fa fa-user me-2"></i> Login
+            </a>
+        }
     </div>
 </div>
 
