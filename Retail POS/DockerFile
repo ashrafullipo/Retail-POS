@@ -1,14 +1,19 @@
-﻿# Use official ASP.NET Core runtime image
+﻿# Base runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 80
+EXPOSE 8080
 
-# Build stage
+# Build image
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
+
+# Copy csproj and restore separately (better layer caching)
+COPY ["Retail_POS.csproj", "./"]
+RUN dotnet restore "Retail_POS.csproj"
+
+# Copy rest of the files and publish
 COPY . .
-RUN dotnet restore "./Retail_POS.csproj"
-RUN dotnet publish "./Retail_POS.csproj" -c Release -o /app/publish
+RUN dotnet publish "Retail_POS.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 # Final stage
 FROM base AS final
