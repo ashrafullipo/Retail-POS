@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Retail_POS.Models;
 using Retail_POS.ViewModel;
+using Retail_POS.ViewMoodel;
 
 namespace Retail_POS.Controllers
 {
@@ -176,6 +177,23 @@ namespace Retail_POS.Controllers
             }
             TempData["Message"] = "Password change failed. Please try again.";
             return View(model);
+        }
+
+        //VerifyEmaikl
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult VerifyEmail() => View();
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> VerifyEmail(VerifyEmailViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                return View(model);
+            }
+            TempData["Message"] = "Verification link has been sent to your email.";
+            return RedirectToAction("Login"); // login page e redirect
         }
 
     }
